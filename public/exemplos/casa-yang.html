@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Yang · Cozinha Chinesa Autoral — Rondonópolis, MT</title>
+<meta name="description" content="Casa Yang — cozinha chinesa autoral desde 1998. Wok em fogo alto, dim sum feito à mão, pato laqueado. Pedidos e reservas direto no WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=70" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ LAYER 1 — PRIMITIVE ============ */
+:root{
+  --ink-900:#0C0B0A; --ink-800:#15130F; --ink-700:#211E18; --ink-600:#322E26;
+  --paper-100:#FAF7F0; --paper-200:#EFE9DC; --paper-400:#C3B9A5;
+  --jade-500:#1F5F4B; --jade-600:#164838;
+  --vermelho-500:#B2251E; --vermelho-600:#8E1C16;
+  --ouro-400:#C9A24A; --ouro-300:#E2C57E;
+
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-ui:'Inter',system-ui,-apple-system,sans-serif;
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+  --space-6:24px; --space-8:32px; --space-12:48px; --space-16:64px; --space-24:96px;
+
+  --radius-sm:4px; --radius-md:10px; --radius-full:999px;
+  --shadow-md:0 4px 20px rgba(0,0,0,.18);
+  --shadow-lg:0 18px 50px rgba(0,0,0,.32);
+
+  --dur-fast:160ms; --dur-base:280ms; --dur-slow:800ms;
+  --ease:cubic-bezier(.22,.61,.36,1);
+
+  /* ============ LAYER 2 — SEMANTIC ============ */
+  --bg:var(--paper-100);
+  --bg-inverse:var(--ink-900);
+  --surface:#FFFFFF;
+  --surface-alt:var(--paper-200);
+  --text:var(--ink-800);
+  --text-muted:#5B564B;
+  --text-on-dark:var(--paper-100);
+  --text-on-dark-muted:#B9B2A3;
+  --primary:var(--vermelho-500);
+  --primary-hover:var(--vermelho-600);
+  --accent:var(--ouro-400);
+  --secondary:var(--jade-500);
+  --border:rgba(21,19,15,.12);
+  --border-dark:rgba(250,247,240,.14);
+  --focus:var(--ouro-400);
+  --img-fallback:linear-gradient(150deg,var(--ink-700),var(--jade-600) 55%,var(--ink-800));
+
+  /* ============ LAYER 3 — COMPONENT ============ */
+  --btn-primary-bg:var(--primary);
+  --btn-primary-fg:#FFFFFF;
+  --nav-h:68px;
+  --card-bg:var(--surface);
+  --card-radius:var(--radius-md);
+  --tag-bg:rgba(31,95,75,.10);
+  --tag-fg:var(--jade-600);
+  --media-radius:var(--radius-md);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:var(--ink-900); --surface:var(--ink-700); --surface-alt:var(--ink-800);
+    --text:var(--paper-100); --text-muted:#A9A296;
+    --border:rgba(250,247,240,.14);
+    --card-bg:var(--ink-700);
+    --tag-bg:rgba(226,197,126,.12); --tag-fg:var(--ouro-300);
+    --primary:#CF3A31; --primary-hover:#B2251E;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:var(--radius-sm)}
+.wrap{width:min(1180px,100% - var(--space-8));margin-inline:auto}
+@media(min-width:768px){.wrap{width:min(1180px,100% - var(--space-16))}}
+
+/* ============ MEDIA (imagens web) ============ */
+/* .media = container com fallback; se a imagem falhar, some e sobra o gradiente */
+.media{position:relative;overflow:hidden;background:var(--img-fallback);border-radius:var(--media-radius);isolation:isolate}
+.media img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform var(--dur-slow) var(--ease),opacity 500ms var(--ease);opacity:0}
+.media img.is-loaded{opacity:1}
+.media img.is-failed{display:none}
+.media--zoom:hover img{transform:scale(1.06)}
+.media::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 0%,transparent 55%,rgba(12,11,10,.35))}
+
+/* Typography */
+h1,h2,h3{font-family:var(--font-display);font-weight:700;line-height:1.1;letter-spacing:-.01em}
+h1{font-size:clamp(2.7rem,7vw,5.2rem)}
+h2{font-size:clamp(2rem,4.4vw,3.2rem)}
+h3{font-size:1.3rem}
+.eyebrow{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:var(--space-3)}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--accent)}
+.lead{font-size:1.075rem;color:var(--text-muted);max-width:56ch}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-height:48px;padding:0 var(--space-6);
+  font-family:var(--font-ui);font-size:.9rem;font-weight:600;letter-spacing:.02em;
+  border:1px solid transparent;border-radius:var(--radius-full);
+  cursor:pointer;touch-action:manipulation;
+  transition:background var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:var(--btn-primary-bg);color:var(--btn-primary-fg);box-shadow:var(--shadow-md)}
+.btn--primary:hover{background:var(--primary-hover);box-shadow:var(--shadow-lg)}
+.btn--ghost{background:rgba(250,247,240,.06);color:#fff;border-color:var(--border-dark);backdrop-filter:blur(6px)}
+.btn--ghost:hover{background:rgba(250,247,240,.14)}
+.btn--outline{background:transparent;color:var(--text);border-color:var(--border)}
+.btn--outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn svg{width:18px;height:18px;stroke-width:1.75;flex:none}
+
+/* ============ NAV ============ */
+header.nav{position:fixed;inset:0 0 auto 0;z-index:50;height:var(--nav-h);display:flex;align-items:center;
+  transition:background var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease)}
+header.nav.is-stuck{background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border)}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;width:100%}
+.logo{display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:#fff;letter-spacing:.02em;text-shadow:0 1px 12px rgba(0,0,0,.4)}
+header.nav.is-stuck .logo{color:var(--text);text-shadow:none}
+.logo__mark{width:34px;height:34px;flex:none;border-radius:var(--radius-sm);display:grid;place-items:center;background:var(--primary);color:#fff;font-size:1rem;font-weight:700}
+.nav__links{display:none;gap:var(--space-8);align-items:center}
+@media(min-width:900px){.nav__links{display:flex}}
+.nav__links a{font-size:.85rem;font-weight:500;letter-spacing:.04em;color:rgba(255,255,255,.9);padding:var(--space-2) 0;position:relative;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+header.nav.is-stuck .nav__links a{color:var(--text-muted);text-shadow:none}
+.nav__links a::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:0;background:var(--accent);transition:width var(--dur-base) var(--ease)}
+.nav__links a:hover::after{width:100%}
+.nav__cta{display:none}
+@media(min-width:640px){.nav__cta{display:inline-flex;min-height:44px;padding:0 var(--space-4)}}
+
+/* ============ HERO (foto de fundo) ============ */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  padding-block:calc(var(--nav-h) + var(--space-16)) var(--space-16);
+  background:var(--ink-900);overflow:hidden;isolation:isolate}
+.hero__media{position:absolute;inset:0;z-index:-2;border-radius:0;background:var(--img-fallback)}
+.hero__media img{width:100%;height:100%;object-fit:cover;opacity:0;
+  transform:scale(1.08);
+  transition:opacity 1200ms var(--ease);
+  animation:kenburns 24s var(--ease) infinite alternate}
+.hero__media img.is-loaded{opacity:.62}
+@keyframes kenburns{from{transform:scale(1.08) translate3d(0,0,0)}to{transform:scale(1.18) translate3d(-2%,-1.5%,0)}}
+.hero__scrim{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(12,11,10,.78) 0%,rgba(12,11,10,.30) 38%,rgba(12,11,10,.94) 100%),
+             radial-gradient(70% 60% at 78% 20%,rgba(201,162,74,.18),transparent 62%)}
+.hero__grain{position:absolute;inset:-40%;z-index:-1;opacity:.05;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero__content{max-width:46ch;color:var(--text-on-dark)}
+.hero h1{color:#fff;margin-block:var(--space-4) var(--space-4);text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.hero h1 em{font-style:italic;color:var(--ouro-300)}
+.hero p{color:#DED8CC;font-size:1.06rem;max-width:48ch}
+.hero__actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-8)}
+.hero__meta{display:flex;flex-wrap:wrap;gap:var(--space-6) var(--space-12);margin-top:var(--space-12);padding-top:var(--space-6);border-top:1px solid var(--border-dark)}
+.hero__meta div{font-size:.8rem;color:var(--text-on-dark-muted)}
+.hero__meta strong{display:block;font-family:var(--font-display);font-size:1.7rem;color:#fff;line-height:1.2}
+.scroll-hint{position:absolute;bottom:var(--space-6);right:var(--space-8);z-index:2;writing-mode:vertical-rl;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);display:none}
+@media(min-width:900px){.scroll-hint{display:block}}
+.scroll-hint::after{content:"";display:block;width:1px;height:48px;margin:var(--space-3) auto 0;background:linear-gradient(var(--accent),transparent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* ============ TRUST ============ */
+.trust{background:var(--bg-inverse);color:var(--text-on-dark-muted);border-block:1px solid var(--border-dark);padding-block:var(--space-6)}
+.trust__grid{display:grid;gap:var(--space-6);grid-template-columns:repeat(2,1fr);align-items:center}
+@media(min-width:900px){.trust__grid{grid-template-columns:repeat(4,1fr)}}
+.trust__item{display:flex;align-items:center;gap:var(--space-3);font-size:.82rem;line-height:1.35}
+.trust__item svg{width:22px;height:22px;color:var(--accent);flex:none;stroke-width:1.5}
+.trust__item b{display:block;color:#fff;font-weight:600}
+
+section{padding-block:var(--space-24)}
+.sec-head{max-width:62ch;margin-bottom:var(--space-12)}
+.sec-head h2{margin-block:var(--space-3) var(--space-4)}
+
+/* ============ HISTÓRIA ============ */
+.story{display:grid;gap:var(--space-12);align-items:center}
+@media(min-width:900px){.story{grid-template-columns:1.05fr .95fr;gap:var(--space-16)}}
+.story__stack{position:relative}
+.story__main{aspect-ratio:4/5;box-shadow:var(--shadow-lg)}
+.story__inset{position:absolute;right:calc(var(--space-8) * -1);bottom:var(--space-12);width:44%;aspect-ratio:1/1;
+  border:6px solid var(--bg);box-shadow:var(--shadow-lg);display:none}
+@media(min-width:1000px){.story__inset{display:block}}
+.story__badge{position:absolute;z-index:3;left:var(--space-6);bottom:var(--space-6);background:var(--surface);color:var(--text);padding:var(--space-4) var(--space-6);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);max-width:220px}
+.story__badge strong{font-family:var(--font-display);font-size:1.9rem;display:block;color:var(--primary);line-height:1}
+.story__badge span{font-size:.75rem;color:var(--text-muted);letter-spacing:.04em}
+.story ul{list-style:none;margin-top:var(--space-8);display:grid;gap:var(--space-4)}
+.story li{display:flex;gap:var(--space-3);font-size:.95rem;color:var(--text-muted)}
+.story li svg{width:20px;height:20px;color:var(--secondary);flex:none;margin-top:3px;stroke-width:1.75}
+.signature{margin-top:var(--space-8);display:flex;align-items:center;gap:var(--space-4)}
+.signature .media{width:56px;height:56px;border-radius:var(--radius-full);flex:none}
+.signature b{display:block;font-size:.9rem}
+.signature span{font-size:.78rem;color:var(--text-muted)}
+
+/* ============ CARDÁPIO ============ */
+.menu{background:var(--surface-alt)}
+.menu__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--space-6)}
+.tabs{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-block:var(--space-8) var(--space-12)}
+.tab{min-height:44px;padding-inline:20px;border:1px solid var(--border);border-radius:var(--radius-full);background:transparent;color:var(--text-muted);font-family:var(--font-ui);font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
+.tab:hover{border-color:var(--accent);color:var(--text)}
+.tab[aria-selected="true"]{background:var(--ink-800);color:var(--paper-100);border-color:var(--ink-800)}
+@media(prefers-color-scheme:dark){.tab[aria-selected="true"]{background:var(--accent);color:var(--ink-900);border-color:var(--accent)}}
+
+.dishes{display:grid;gap:var(--space-6);grid-template-columns:1fr}
+@media(min-width:700px){.dishes{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1050px){.dishes{grid-template-columns:repeat(3,1fr)}}
+.dish{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--card-radius);overflow:hidden;display:flex;flex-direction:column;
+  transition:transform var(--dur-base) var(--ease),box-shadow var(--dur-base) var(--ease),border-color var(--dur-base) var(--ease)}
+.dish:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.dish .media{aspect-ratio:16/10;border-radius:0}
+.dish:hover .media img{transform:scale(1.06)}
+.dish__body{padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);flex:1}
+.dish__top{display:flex;justify-content:space-between;gap:var(--space-4);align-items:baseline}
+.dish__name{font-family:var(--font-display);font-size:1.35rem;font-weight:600;line-height:1.2}
+.dish__zh{font-size:.72rem;color:var(--text-muted);letter-spacing:.08em}
+.dish__price{font-family:var(--font-display);font-size:1.25rem;color:var(--primary);white-space:nowrap;font-weight:700}
+.dish__desc{font-size:.9rem;color:var(--text-muted);flex:1}
+.tags{display:flex;gap:var(--space-2);flex-wrap:wrap}
+.tag{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--tag-bg);color:var(--tag-fg);padding:4px 10px;border-radius:var(--radius-full)}
+.tag--hot{background:rgba(178,37,30,.12);color:var(--primary)}
+.menu__note{margin-top:var(--space-12);font-size:.82rem;color:var(--text-muted);display:flex;gap:var(--space-3);align-items:center}
+.menu__note svg{width:18px;height:18px;flex:none;color:var(--secondary)}
+
+/* ============ FAIXA PARALLAX ============ */
+.strip{position:relative;min-height:56svh;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden;padding-block:var(--space-24)}
+.strip__media{position:absolute;inset:0;z-index:-2;border-radius:0;background:var(--img-fallback)}
+.strip__media img{will-change:transform;opacity:0}
+.strip__media img.is-loaded{opacity:.55}
+.strip::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(12,11,10,.80),rgba(12,11,10,.66))}
+.strip h2{color:#fff;max-width:18ch;margin-inline:auto}
+.strip p{color:#D8D2C6;max-width:52ch;margin:var(--space-4) auto 0}
+
+/* ============ GALERIA ============ */
+.gallery{display:grid;gap:var(--space-4);grid-template-columns:repeat(2,1fr)}
+@media(min-width:900px){.gallery{grid-template-columns:repeat(4,1fr);grid-auto-rows:180px}}
+.gallery .media{aspect-ratio:1/1}
+@media(min-width:900px){
+  .gallery .media{aspect-ratio:auto;height:100%}
+  .gallery .media:nth-child(1){grid-column:span 2;grid-row:span 2}
+  .gallery .media:nth-child(4){grid-row:span 2}
+}
+
+/* ============ AVALIAÇÕES ============ */
+.reviews__grid{display:grid;gap:var(--space-6);grid-template-columns:1fr}
+@media(min-width:820px){.reviews__grid{grid-template-columns:repeat(3,1fr)}}
+.review{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:var(--space-8);display:flex;flex-direction:column;gap:var(--space-4)}
+.stars{display:flex;gap:2px;color:var(--accent)}
+.stars svg{width:16px;height:16px;fill:currentColor;stroke:none}
+.review p{font-family:var(--font-display);font-size:1.2rem;line-height:1.45}
+.review footer{display:flex;align-items:center;gap:var(--space-3);margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border)}
+.avatar{width:40px;height:40px;border-radius:var(--radius-full);flex:none;overflow:hidden}
+.avatar.media{background:var(--secondary)}
+.review footer b{display:block;font-size:.85rem}
+.review footer span{font-size:.75rem;color:var(--text-muted)}
+
+/* ============ LOCALIZAÇÃO ============ */
+.local{background:var(--bg-inverse);color:var(--text-on-dark)}
+.local h2{color:#fff}
+.local__grid{display:grid;gap:var(--space-12)}
+@media(min-width:950px){.local__grid{grid-template-columns:.85fr 1.15fr;gap:var(--space-16)}}
+.info{display:grid;gap:var(--space-8);align-content:start}
+.info__row{display:flex;gap:var(--space-4)}
+.info__row svg{width:22px;height:22px;color:var(--accent);flex:none;stroke-width:1.5;margin-top:2px}
+.info__row b{display:block;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:var(--space-1)}
+.info__row p{color:var(--text-on-dark-muted);font-size:.95rem}
+.hours{list-style:none;font-size:.9rem;color:var(--text-on-dark-muted)}
+.hours li{display:flex;justify-content:space-between;padding:var(--space-2) 0;border-bottom:1px dashed var(--border-dark)}
+.hours li[data-today]{color:#fff;font-weight:600}
+.hours li[data-today] span:last-child{color:var(--ouro-300)}
+.status{display:inline-flex;align-items:center;gap:var(--space-2);margin-top:var(--space-4);font-size:.8rem;font-weight:600;color:#fff}
+.status i{width:8px;height:8px;border-radius:var(--radius-full);background:#3FBF7F;box-shadow:0 0 0 0 rgba(63,191,127,.6);animation:beat 2s infinite}
+.status[data-closed] i{background:#B2251E;animation:none}
+@keyframes beat{70%{box-shadow:0 0 0 8px rgba(63,191,127,0)}100%{box-shadow:0 0 0 0 rgba(63,191,127,0)}}
+.map{position:relative;min-height:440px;border-radius:var(--card-radius);overflow:hidden;border:1px solid var(--border-dark);box-shadow:var(--shadow-lg)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) contrast(1.05) opacity(.85)}
+.map__card{position:absolute;z-index:2;left:var(--space-6);bottom:var(--space-6);right:var(--space-6);max-width:340px;background:var(--surface);color:var(--text);border-radius:var(--radius-sm);padding:var(--space-6);box-shadow:var(--shadow-lg)}
+.map__card b{font-family:var(--font-display);font-size:1.2rem;display:block}
+.map__card span{font-size:.85rem;color:var(--text-muted);display:block;margin-block:var(--space-1) var(--space-4)}
+
+/* ============ CTA ============ */
+.cta{position:relative;text-align:center;overflow:hidden;color:#fff;background:var(--ink-900)}
+.cta__media{position:absolute;inset:0;z-index:0;border-radius:0;background:var(--img-fallback)}
+.cta__media img{opacity:0}
+.cta__media img.is-loaded{opacity:.38}
+.cta::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,11,10,.86),rgba(12,11,10,.72))}
+.cta .wrap{position:relative;z-index:2;display:grid;place-items:center;gap:var(--space-5)}
+.cta h2{color:#fff;max-width:16ch}
+.cta .lead{color:#D8D2C6;text-align:center}
+.cta__actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;margin-top:var(--space-3)}
+
+/* ============ FOOTER ============ */
+footer.site{background:var(--bg-inverse);color:var(--text-on-dark-muted);border-top:1px solid var(--border-dark);padding-block:var(--space-12) var(--space-8);font-size:.82rem}
+.foot__grid{display:grid;gap:var(--space-8);grid-template-columns:1fr}
+@media(min-width:760px){.foot__grid{grid-template-columns:2fr 1fr 1fr}}
+.foot__grid h4{color:#fff;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--space-4)}
+.foot__grid ul{list-style:none;display:grid;gap:var(--space-2)}
+.foot__grid a:hover{color:var(--accent)}
+.foot__bottom{margin-top:var(--space-12);padding-top:var(--space-6);border-top:1px solid var(--border-dark);display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;font-size:.75rem}
+
+/* ============ ORDER BAR ============ */
+.orderbar{position:fixed;left:0;right:0;bottom:0;z-index:60;
+  padding:var(--space-3) var(--space-4);padding-bottom:calc(var(--space-3) + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--border);
+  display:flex;gap:var(--space-3);transform:translateY(110%);transition:transform var(--dur-base) var(--ease)}
+.orderbar.is-visible{transform:translateY(0)}
+.orderbar .btn{flex:1}
+@media(min-width:900px){.orderbar{display:none}}
+@media(max-width:899px){body{padding-bottom:84px}}
+
+/* ============ REVEAL ============ */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease)}
+[data-reveal].is-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  [data-reveal]{opacity:1;transform:none}
+  .orderbar{transform:none}
+  .hero__media img,.strip__media img{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<a class="btn btn--outline" href="#main" style="position:absolute;left:-9999px" onfocus="this.style.left='16px';this.style.top='16px';this.style.zIndex=99" onblur="this.style.left='-9999px'">Pular para o conteúdo</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="#" class="logo" aria-label="Casa Yang, início"><span class="logo__mark" aria-hidden="true">Y</span> Casa Yang</a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#historia">História</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#casa">A casa</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#localizacao">Localização</a>
+    </nav>
+    <a class="btn btn--primary nav__cta" href="#pedido">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 2.3A1 1 0 0 0 5.4 17H17"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+      Fazer pedido
+    </a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="media hero__media" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=70"
+         srcset="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=60 900w,
+                 https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=65 1400w,
+                 https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1920&q=70 1920w"
+         sizes="100vw" alt="" fetchpriority="high" decoding="async">
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__grain" aria-hidden="true"></div>
+  <span class="scroll-hint" aria-hidden="true">Role</span>
+
+  <div class="wrap hero__content">
+    <p class="eyebrow" data-reveal>Desde 1998 · Rondonópolis, MT</p>
+    <h1 data-reveal style="transition-delay:80ms">Wok em fogo alto.<br><em>Receita de família.</em></h1>
+    <p data-reveal style="transition-delay:160ms">Cozinha chinesa autoral conduzida pela mesma família há três gerações. Dim sum moldado à mão todas as manhãs, pato laqueado por encomenda e um caldo mestre que ferve desde 1998.</p>
+    <div class="hero__actions" data-reveal style="transition-delay:240ms">
+      <a class="btn btn--primary" href="#pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+        Pedir pelo WhatsApp
+      </a>
+      <a class="btn btn--ghost" href="#cardapio">Ver cardápio</a>
+    </div>
+    <div class="hero__meta" data-reveal style="transition-delay:320ms">
+      <div><strong>4,9</strong>1.284 avaliações Google</div>
+      <div><strong>27</strong>anos servindo a cidade</div>
+      <div><strong>35min</strong>entrega média no Centro</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust" style="padding-block:var(--space-6)">
+  <div class="wrap trust__grid">
+    <div class="trust__item" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8z"/></svg>
+      <span><b>Melhor Asiático 2024</b>Guia Gastronômico MT</span>
+    </div>
+    <div class="trust__item" data-reveal style="transition-delay:60ms">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 3l8 3v5c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span><b>Selo A — Vigilância</b>Inspeção sanitária 2025</span>
+    </div>
+    <div class="trust__item" data-reveal style="transition-delay:120ms">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+      <span><b>Insumos rastreados</b>Hortifrúti local, peixe do dia</span>
+    </div>
+    <div class="trust__item" data-reveal style="transition-delay:180ms">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4L12 14l-3-3"/></svg>
+      <span><b>Pedido sem app</b>Direto no WhatsApp, sem taxa</span>
+    </div>
+  </div>
+</section>
+
+<!-- HISTÓRIA -->
+<section id="historia">
+  <div class="wrap story">
+    <div class="story__stack" data-reveal>
+      <div class="media media--zoom story__main">
+        <img loading="lazy" decoding="async" alt="Cozinheiro salteando no wok em fogo alto na cozinha da Casa Yang"
+             src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=900&q=70">
+      </div>
+      <div class="media media--zoom story__inset">
+        <img loading="lazy" decoding="async" alt="Dim sum sendo moldado à mão"
+             src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=70">
+      </div>
+      <div class="story__badge">
+        <strong>3ª</strong>
+        <span>geração da família Yang no comando da cozinha</span>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow" data-reveal>A história</p>
+      <h2 data-reveal style="transition-delay:60ms">Nada de atalho.<br>Nem no caldo, nem na massa.</h2>
+      <p class="lead" data-reveal style="transition-delay:120ms">Abrimos em 1998 num salão de 20 lugares na Av. Amazonas. Hoje são 90 — e o caldo mestre ainda ferve 12 horas por dia, alimentado todo dia, como o avô Yang ensinou.</p>
+      <ul>
+        <li data-reveal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Dim sum moldado à mão, todas as manhãs, a partir das 5h.</li>
+        <li data-reveal style="transition-delay:60ms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Zero glutamato adicionado. O umami vem do caldo, não do pote.</li>
+        <li data-reveal style="transition-delay:120ms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Cozinha aberta: você vê o wok, o fogo e quem cozinha.</li>
+        <li data-reveal style="transition-delay:180ms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Opções vegetarianas e sem glúten sinalizadas no cardápio.</li>
+      </ul>
+      <div class="signature" data-reveal style="transition-delay:240ms">
+        <div class="media">
+          <img loading="lazy" decoding="async" alt="Retrato do chef Wei Yang"
+               src="https://images.unsplash.com/photo-1583394293214-28a5b42f5d78?auto=format&fit=crop&w=200&q=70">
+        </div>
+        <div><b>Wei Yang</b><span>Chef-proprietário · 3ª geração</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDÁPIO -->
+<section id="cardapio" class="menu">
+  <div class="wrap">
+    <div class="menu__head">
+      <div class="sec-head" style="margin-bottom:0">
+        <p class="eyebrow" data-reveal>Cardápio</p>
+        <h2 data-reveal style="transition-delay:60ms">O que sai do wok hoje</h2>
+        <p class="lead" data-reveal style="transition-delay:120ms">Preços cheios, sem taxa escondida. Fotos dos pratos reais, atualizadas a cada temporada.</p>
+      </div>
+      <a class="btn btn--outline" href="#pedido" data-reveal>Baixar cardápio (PDF)</a>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Categorias do cardápio">
+      <button class="tab" role="tab" aria-selected="true" data-cat="destaques">Destaques</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="dimsum">Dim Sum</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="wok">Wok &amp; Grelha</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="veg">Vegetariano</button>
+      <button class="tab" role="tab" aria-selected="false" data-cat="doces">Sobremesas</button>
+    </div>
+
+    <div class="dishes" id="dishes" role="tabpanel" aria-live="polite"></div>
+
+    <p class="menu__note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+      Informe alergias no pedido. A cozinha manipula amendoim, gergelim, frutos do mar e glúten.
+    </p>
+  </div>
+</section>
+
+<!-- FAIXA PARALLAX -->
+<section class="strip" id="fogo">
+  <div class="media strip__media" aria-hidden="true">
+    <img loading="lazy" decoding="async" alt="" id="stripImg"
+         src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=65">
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal style="justify-content:center">Wok hei</p>
+    <h2 data-reveal style="transition-delay:60ms">O sabor que só nasce a 400 °C</h2>
+    <p data-reveal style="transition-delay:120ms">Wok hei é o “sopro do wok”: a fumaça que gruda no macarrão quando o ferro está quente o bastante. Não existe atalho — existe fogo, ferro e pulso.</p>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="casa">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>A casa</p>
+      <h2 data-reveal style="transition-delay:60ms">90 lugares, cozinha aberta, sem cortina</h2>
+    </div>
+    <div class="gallery">
+      <div class="media media--zoom" data-reveal>
+        <img loading="lazy" decoding="async" alt="Salão da Casa Yang com lanternas e mesas de madeira"
+             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=70">
+      </div>
+      <div class="media media--zoom" data-reveal style="transition-delay:80ms">
+        <img loading="lazy" decoding="async" alt="Cestos de bambu com dim sum no vapor"
+             src="https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=700&q=70">
+      </div>
+      <div class="media media--zoom" data-reveal style="transition-delay:160ms">
+        <img loading="lazy" decoding="async" alt="Detalhe de macarrão salteado sendo servido"
+             src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=700&q=70">
+      </div>
+      <div class="media media--zoom" data-reveal style="transition-delay:240ms">
+        <img loading="lazy" decoding="async" alt="Chá sendo servido em bule tradicional"
+             src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=70">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" style="background:var(--surface-alt)">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Prova social</p>
+      <h2 data-reveal style="transition-delay:60ms">1.284 avaliações. Média 4,9.</h2>
+    </div>
+    <div class="reviews__grid" id="reviews"></div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizacao" class="local">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" data-reveal>Onde estamos</p>
+      <h2 data-reveal style="transition-delay:60ms">Centro de Rondonópolis, 2 min do Parque das Águas</h2>
+    </div>
+    <div class="local__grid">
+      <div class="info">
+        <div class="info__row" data-reveal>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><b>Endereço</b><p>Av. Amazonas, 1420 — Centro<br>Rondonópolis · MT · 78700-000</p></div>
+        </div>
+        <div class="info__row" data-reveal style="transition-delay:60ms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+          <div><b>Contato</b><p>(66) 3421-9800 · WhatsApp (66) 99999-1998<br>reservas@casayang.com.br</p></div>
+        </div>
+        <div class="info__row" data-reveal style="transition-delay:120ms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div style="flex:1">
+            <b>Horários</b>
+            <ul class="hours" id="hours">
+              <li data-day="1"><span>Segunda</span><span>Fechado</span></li>
+              <li data-day="2"><span>Terça</span><span>11h–14h · 18h–23h</span></li>
+              <li data-day="3"><span>Quarta</span><span>11h–14h · 18h–23h</span></li>
+              <li data-day="4"><span>Quinta</span><span>11h–14h · 18h–23h</span></li>
+              <li data-day="5"><span>Sexta</span><span>11h–15h · 18h–00h</span></li>
+              <li data-day="6"><span>Sábado</span><span>11h–15h · 18h–00h</span></li>
+              <li data-day="0"><span>Domingo</span><span>11h–16h</span></li>
+            </ul>
+            <span class="status" id="status"><i aria-hidden="true"></i><span>Verificando…</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="map" data-reveal>
+        <iframe title="Mapa com a localização da Casa Yang em Rondonópolis" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Av.+Amazonas,+Centro,+Rondon%C3%B3polis+-+MT&output=embed"></iframe>
+        <div class="map__card">
+          <b>Casa Yang</b>
+          <span>Av. Amazonas, 1420 · Estacionamento próprio · Acesso PCD</span>
+          <a class="btn btn--primary" style="width:100%" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/dir/?api=1&destination=Av.+Amazonas,+1420,+Centro,+Rondon%C3%B3polis+-+MT">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8z"/></svg>
+            Traçar rota
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="pedido" class="cta">
+  <div class="media cta__media" aria-hidden="true">
+    <img loading="lazy" decoding="async" alt=""
+         src="https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=1600&q=65">
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal style="justify-content:center">Pedidos</p>
+    <h2 data-reveal style="transition-delay:60ms">Wok ligado. É só chamar.</h2>
+    <p class="lead" data-reveal style="transition-delay:120ms">Atendimento humano no WhatsApp. Entrega própria em até 8 km — sem taxa de aplicativo, sem intermediário.</p>
+    <div class="cta__actions" data-reveal style="transition-delay:180ms">
+      <a class="btn btn--primary" target="_blank" rel="noopener"
+         href="https://wa.me/5566999991998?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido%20na%20Casa%20Yang.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+        Pedir no WhatsApp
+      </a>
+      <a class="btn btn--ghost" href="tel:+556634219800">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        Reservar por telefone
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a href="#" class="logo" style="color:#fff;text-shadow:none"><span class="logo__mark" aria-hidden="true">Y</span> Casa Yang</a>
+        <p style="margin-top:var(--space-4);max-width:36ch">Cozinha chinesa autoral em Rondonópolis desde 1998. CNPJ 00.000.000/0001-00 · Alvará sanitário nº 2025/4471.</p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <ul>
+          <li><a href="#historia">História</a></li>
+          <li><a href="#cardapio">Cardápio</a></li>
+          <li><a href="#casa">A casa</a></li>
+          <li><a href="#localizacao">Localização</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+556634219800">(66) 3421-9800</a></li>
+          <li><a href="https://wa.me/5566999991998" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:reservas@casayang.com.br">reservas@casayang.com.br</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span>© <span id="year"></span> Casa Yang. Todos os direitos reservados.</span>
+      <span>Fotos: Unsplash · Feito em Rondonópolis · MT</span>
+    </div>
+  </div>
+</footer>
+
+<div class="orderbar" id="orderbar">
+  <a class="btn btn--outline" href="tel:+556634219800" aria-label="Ligar para a Casa Yang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+    Ligar
+  </a>
+  <a class="btn btn--primary" target="_blank" rel="noopener"
+     href="https://wa.me/5566999991998?text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20um%20pedido%20na%20Casa%20Yang.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    Fazer pedido
+  </a>
+</div>
+
+<script>
+/* ---------- CDN de imagens (troque por fotos reais do cliente) ---------- */
+const U = (id,w,q) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q||70}`;
+
+/* ---------- CARDÁPIO ---------- */
+const MENU = {
+  destaques:[
+    {n:"Pato Laqueado de Pequim",zh:"北京烤鸭",p:"R$ 189",img:"1518492104633-130d0cc84637",alt:"Pato laqueado fatiado com pele crocante",d:"Pele crocante fatiada à mesa, panquecas finas, cebolinha e molho hoisin da casa. Encomenda com 24h.",t:["Assinatura","Serve 2–3"]},
+    {n:"Frango Xadrez do Avô",zh:"宫保鸡丁",p:"R$ 62",img:"1603133872878-684f208fb84b",alt:"Frango salteado com amendoim e pimenta",d:"Receita de 1998. Amendoim tostado no wok, pimenta sichuan, dados de frango selados em fogo alto.",t:["Picante","Mais pedido"],hot:true},
+    {n:"Camarão ao Sal e Pimenta",zh:"椒盐虾",p:"R$ 84",img:"1565557623262-b51c2513a641",alt:"Camarão frito com alho crocante",d:"Camarão rosa com casca, fritura seca, alho crocante e pimenta branca moída na hora.",t:["Frutos do mar"]}
+  ],
+  dimsum:[
+    {n:"Har Gow — 4 un.",zh:"虾饺",p:"R$ 34",img:"1541696432-82c6da8ce7bf",alt:"Dim sum no vapor em cesto de bambu",d:"Massa translúcida moldada à mão, camarão inteiro e broto de bambu. Vapor de bambu.",t:["Feito à mão"]},
+    {n:"Siu Mai — 4 un.",zh:"烧卖",p:"R$ 30",img:"1563245372-f21724e3856d",alt:"Siu mai recheado servido no vapor",d:"Porco, camarão e shiitake. Finalizado com ovo de codorna.",t:["Clássico"]},
+    {n:"Xiao Long Bao — 6 un.",zh:"小笼包",p:"R$ 44",img:"1534422298391-e4f8c172dddb",alt:"Xiao long bao em cesto de bambu",d:"Recheio suíno em caldo gelatinado. 18 pregas por peça. É caldo quente — coma com cuidado.",t:["Feito à mão"]},
+    {n:"Pãozinho de Porco Assado",zh:"叉烧包",p:"R$ 28",img:"1585032226651-759b368d7246",alt:"Pães chineses recheados",d:"Char siu doce-salgado em massa levemente adocicada, assada com crosta de açúcar.",t:["Doce-salgado"]}
+  ],
+  wok:[
+    {n:"Mapo Tofu",zh:"麻婆豆腐",p:"R$ 54",img:"1582576163090-09d3b6f8a969",alt:"Mapo tofu com molho apimentado",d:"Tofu sedoso, doubanjiang fermentado, pimenta sichuan. Dormência clássica, sem exagero.",t:["Picante"],hot:true},
+    {n:"Costela Braseada 4h",zh:"红烧排骨",p:"R$ 78",img:"1544025162-d76694265947",alt:"Costela braseada brilhante",d:"Anis-estrelado, shaoxing e açúcar de rocha. Desmancha no hashi.",t:["Cozimento lento"]},
+    {n:"Chow Mein da Casa",zh:"炒面",p:"R$ 58",img:"1526318896980-cf78c088247c",alt:"Macarrão salteado no wok",d:"Macarrão de ovo salteado em wok de ferro, com wok hei — o fumê que só o fogo alto dá.",t:["Wok hei"]},
+    {n:"Peixe do Dia ao Vapor",zh:"清蒸鱼",p:"R$ 96",img:"1519708227418-c8fd9a32b7a2",alt:"Peixe inteiro ao vapor com cebolinha",d:"Peixe inteiro, gengibre, cebolinha e shoyu leve escaldado em óleo quente.",t:["Peixe do dia"]}
+  ],
+  veg:[
+    {n:"Berinjela Yuxiang",zh:"鱼香茄子",p:"R$ 46",img:"1512058564366-18510be2db19",alt:"Berinjela salteada em molho escuro",d:"Berinjela selada, molho agridoce fermentado, alho e gengibre. Sem produtos de origem animal.",t:["Vegano"]},
+    {n:"Cogumelos Três Texturas",zh:"三菇小炒",p:"R$ 52",img:"1504674900247-0877df9cc836",alt:"Cogumelos salteados",d:"Shiitake, shimeji e eryngui salteados com alho-poró e molho de soja envelhecido.",t:["Vegano","Sem glúten"]},
+    {n:"Bok Choy no Alho",zh:"蒜蓉青菜",p:"R$ 32",img:"1540420773420-3366772f4999",alt:"Vegetais verdes salteados no alho",d:"Escaldado 40 segundos, finalizado no wok com alho fatiado. Simples e correto.",t:["Vegetariano"]}
+  ],
+  doces:[
+    {n:"Tarteleta de Ovos",zh:"蛋挞",p:"R$ 18",img:"1558961363-fa8fdf82db35",alt:"Tarteletas de ovo douradas",d:"Massa folhada em 128 camadas, creme sedoso servido morno. Sai do forno de 30 em 30 min.",t:["Sai quente"]},
+    {n:"Bolinho de Sésamo",zh:"煎堆",p:"R$ 22",img:"1509365465985-25d11c17e812",alt:"Bolinhos de gergelim fritos",d:"Casquinha de gergelim, recheio de pasta de feijão vermelho.",t:["Frito na hora"]},
+    {n:"Sorvete de Chá Jasmim",zh:"茉莉冰淇淋",p:"R$ 24",img:"1563805042-7684c019e1cb",alt:"Sorvete artesanal em taça",d:"Infusão de flor de jasmim, base de leite integral. Produção própria.",t:["Sem glúten"]}
+  ]
+};
+
+const REVIEWS = [
+  {q:"O pato laqueado é o melhor que já comi fora de São Paulo. Reservei com dois dias e valeu cada minuto.",n:"Marina C.",s:"Google · há 2 semanas",img:"1494790108377-be9c29b29330",alt:"Foto de Marina C."},
+  {q:"Pedi pelo WhatsApp às 19h40, chegou 19h58, ainda pelando. Embalagem impecável.",n:"Rafael B.",s:"Google · há 1 mês",img:"1500648767791-00dcc994a43e",alt:"Foto de Rafael B."},
+  {q:"Sou celíaca e me senti segura pela primeira vez num restaurante asiático. Sinalização clara, equipe treinada.",n:"Juliana S.",s:"TripAdvisor · há 3 meses",img:"1438761681033-6461ffad8d80",alt:"Foto de Juliana S."}
+];
+
+/* ---------- REVEAL ---------- */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+const observeAll = root => root.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+
+/* ---------- FADE-IN + FALLBACK DE IMAGEM ---------- */
+/* toda imagem que carregar recebe .is-loaded; se falhar (404/offline/adblock),
+   recebe .is-failed e o container mantém o gradiente da marca. */
+const wireImg = img => {
+  if(img.complete && img.naturalWidth) return img.classList.add('is-loaded');
+  img.addEventListener('load', ()=>img.classList.add('is-loaded'), {once:true});
+  img.addEventListener('error',()=>img.classList.add('is-failed'),{once:true});
+};
+const wireAll = root => root.querySelectorAll('.media img').forEach(wireImg);
+wireAll(document);
+
+/* ---------- RENDER CARDÁPIO ---------- */
+const grid = document.getElementById('dishes');
+const stars = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8z"/></svg>'.repeat(5);
+
+const render = cat => {
+  grid.innerHTML = MENU[cat].map((x,i)=>`
+    <article class="dish" data-reveal style="transition-delay:${i*60}ms">
+      <div class="media">
+        <img loading="lazy" decoding="async" alt="${x.alt}"
+             src="${U(x.img,700)}"
+             srcset="${U(x.img,500,60)} 500w, ${U(x.img,800,70)} 800w"
+             sizes="(min-width:1050px) 360px, (min-width:700px) 45vw, 90vw">
+      </div>
+      <div class="dish__body">
+        <div class="dish__top">
+          <div>
+            <div class="dish__name">${x.n}</div>
+            <div class="dish__zh">${x.zh}</div>
+          </div>
+          <div class="dish__price">${x.p}</div>
+        </div>
+        <p class="dish__desc">${x.d}</p>
+        <div class="tags">${x.t.map(t=>`<span class="tag${x.hot&&t==='Picante'?' tag--hot':''}">${t}</span>`).join('')}</div>
+      </div>
+    </article>`).join('');
+  observeAll(grid); wireAll(grid);
+};
+
+document.getElementById('reviews').innerHTML = REVIEWS.map((r,i)=>`
+  <article class="review" data-reveal style="transition-delay:${i*80}ms">
+    <div class="stars" aria-label="5 de 5 estrelas">${stars}</div>
+    <p>“${r.q}”</p>
+    <footer>
+      <span class="avatar media"><img loading="lazy" decoding="async" alt="${r.alt}" src="${U(r.img,120,60)}"></span>
+      <span><b>${r.n}</b><span>${r.s}</span></span>
+    </footer>
+  </article>`).join('');
+observeAll(document.getElementById('reviews'));
+wireAll(document.getElementById('reviews'));
+
+/* ---------- TABS ---------- */
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab=>tab.addEventListener('click',()=>{
+  tabs.forEach(t=>t.setAttribute('aria-selected','false'));
+  tab.setAttribute('aria-selected','true');
+  render(tab.dataset.cat);
+}));
+render('destaques');
+observeAll(document);
+
+/* ---------- SCROLL: nav + orderbar + parallax ---------- */
+const nav = document.getElementById('nav');
+const bar = document.getElementById('orderbar');
+const strip = document.querySelector('.strip');
+const stripImg = document.getElementById('stripImg');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let ticking = false;
+
+const onScroll = () => {
+  if(ticking) return; ticking = true;
+  requestAnimationFrame(()=>{
+    const y = window.scrollY;
+    nav.classList.toggle('is-stuck', y > 40);
+    bar.classList.toggle('is-visible', y > 480);
+    if(!reduce && strip){
+      const r = strip.getBoundingClientRect();
+      if(r.bottom > 0 && r.top < innerHeight){
+        const p = (r.top + r.height/2 - innerHeight/2) / innerHeight; // -1..1
+        stripImg.style.transform = `scale(1.22) translate3d(0, ${(p*-7).toFixed(2)}%, 0)`;
+      }
+    }
+    ticking = false;
+  });
+};
+addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ---------- HORÁRIO: dia atual + aberto/fechado ---------- */
+const HOURS = { 0:[[11,16]], 1:[], 2:[[11,14],[18,23]], 3:[[11,14],[18,23]], 4:[[11,14],[18,23]], 5:[[11,15],[18,24]], 6:[[11,15],[18,24]] };
+const now = new Date(), d = now.getDay(), h = now.getHours() + now.getMinutes()/60;
+document.querySelectorAll('#hours li').forEach(li=>{ if(+li.dataset.day === d) li.setAttribute('data-today',''); });
+const open = (HOURS[d]||[]).some(([a,b]) => h >= a && h < b);
+const st = document.getElementById('status');
+st.querySelector('span').textContent = open ? 'Aberto agora — pedidos liberados' : 'Fechado agora — deixe seu pedido agendado';
+if(!open) st.setAttribute('data-closed','');
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
