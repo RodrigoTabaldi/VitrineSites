@@ -678,6 +678,17 @@ textarea.inp{resize:vertical;min-height:96px;font-family:inherit}
 }
 @media print{header,.fab,#toTop,.drawer,.grain{display:none!important}}
 </style>
+<noscript><style>
+/* sem JavaScript, mostra tudo de uma vez em vez de esperar a revelação */
+.rv,.rv-l,.rv-r,.rv-s{opacity:1!important;transform:none!important}
+.about-frame{clip-path:none!important}
+.rev-vp{overflow:visible}
+.rev-track{flex-wrap:wrap;transform:none!important}
+.rcell{flex:1 1 300px}
+.rev-nav,.strip-mask{display:none}
+.qa-a,.pitem-body{grid-template-rows:1fr}
+.qa-ic::after,.pitem .plus::after{display:none}
+</style></noscript>
 </head>
 <body>
 <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -1699,12 +1710,12 @@ textarea.inp{resize:vertical;min-height:96px;font-family:inherit}
     var lb = document.getElementById("lb");
     var img = document.getElementById("lbImg");
     var cap = document.getElementById("lbCap");
-    var items = Array.prototype.slice.call(document.querySelectorAll("#gallery .rcard, .strip-item[data-full]"));
+    var items = Array.prototype.slice.call(document.querySelectorAll('#gallery .rcard, .strip-item[role="button"]'));
     var cur = 0, lastFocus = null;
     function show(i){
       cur = (i + items.length) % items.length;
       var f = items[cur];
-      img.src = f.getAttribute("data-full");
+      img.src = f.getAttribute("data-full") || f.querySelector("img").src;
       img.alt = f.querySelector("img").alt;
       cap.textContent = f.getAttribute("data-cap");
     }
