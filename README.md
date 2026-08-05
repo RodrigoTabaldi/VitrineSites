@@ -50,6 +50,7 @@ npm run preview
 - `/exemplos/noir-atelier.html` → Noir Atelier (salão)
 - `/exemplos/casa-yang.html` → Casa Yang (restaurante)
 - `/exemplos/dra-ana-carolina-neves.html` → Dra. Ana Carolina Neves · A|C Clinique (clínica de harmonização orofacial)
+- `/exemplos/dra-camila-calegari.html` → Dra. Camila Calegari (clínica de harmonização facial · Tubarão — SC)
 
 Seções internas navegam por âncora (`#inicio`, `#servicos`, `#exemplos`, `#planos`, `#pagamento`, `#depoimentos`, `#faq`). Exemplos abrem em nova aba.
 
@@ -68,11 +69,12 @@ react/
 │   └── index.css           # design system
 └── public/
     ├── _redirects          # SPA fallback
-    └── exemplos/           # 4 sites-demo estáticos (HTML puro)
+    └── exemplos/           # 5 sites-demo estáticos (HTML puro)
         ├── vertice-automoveis.html
         ├── noir-atelier.html
         ├── casa-yang.html
-        └── dra-ana-carolina-neves.html   # clínica de harmonização (animado, acessível)
+        ├── dra-ana-carolina-neves.html   # clínica de harmonização (animado, acessível)
+        └── dra-camila-calegari.html      # clínica de harmonização facial · Tubarão-SC
 ```
 
 ## Configurar o negócio
