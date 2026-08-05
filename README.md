@@ -49,6 +49,7 @@ npm run preview
 - `/exemplos/vertice-automoveis.html` → Vértice Automóveis (concessionária)
 - `/exemplos/noir-atelier.html` → Noir Atelier (salão)
 - `/exemplos/casa-yang.html` → Casa Yang (restaurante)
+- `/exemplos/dra-ana-carolina-neves.html` → Dra. Ana Carolina Neves · A|C Clinique (clínica de harmonização orofacial)
 
 Seções internas navegam por âncora (`#inicio`, `#servicos`, `#exemplos`, `#planos`, `#pagamento`, `#depoimentos`, `#faq`). Exemplos abrem em nova aba.
 
@@ -67,10 +68,11 @@ react/
 │   └── index.css           # design system
 └── public/
     ├── _redirects          # SPA fallback
-    └── exemplos/           # 3 sites-demo estáticos (HTML puro)
+    └── exemplos/           # 4 sites-demo estáticos (HTML puro)
         ├── vertice-automoveis.html
         ├── noir-atelier.html
-        └── casa-yang.html
+        ├── casa-yang.html
+        └── dra-ana-carolina-neves.html   # clínica de harmonização (animado, acessível)
 ```
 
 ## Configurar o negócio
